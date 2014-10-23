@@ -8,7 +8,7 @@
 
 #import "SemMathScene.h"
 #import "IntroScene.h"
-#import "StatusLayer.h"
+#import "BGLayer.h"
 #import "InputLayer.h"
 
 @implementation SemMathScene
@@ -32,14 +32,14 @@
     CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor darkGrayColor]];
     [self addChild:background];
     
-    StatusLayer *statusLayer = [StatusLayer node];
+    BGLayer *statusLayer = [BGLayer node];
     [self addChild:statusLayer];
     
     InputLayer *inputLayer = [InputLayer node];
     [self addChild:inputLayer];
     
     // Create a back button
-    CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    /*CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     [backButton setLabelColor:[CCColor blackColor] forState:CCControlStateNormal];
     [backButton setLabelColor:[CCColor darkGrayColor] forState:CCControlStateHighlighted];
     backButton.positionType = CCPositionTypeNormalized;
@@ -47,7 +47,7 @@
     [backButton setTarget:self selector:@selector(onBackClicked:)];
     [self addChild:backButton];
     
-    [self addExpression:@"+" withAugend:6 withAddend:2];
+    [self addExpression:@"+" withAugend:6 withAddend:2];*/
     // done
     return self;
 }

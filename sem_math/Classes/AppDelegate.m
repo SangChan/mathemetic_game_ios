@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------
 
 #import "AppDelegate.h"
+#import "SemMathScene.h"
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
 
@@ -49,7 +50,7 @@
 -(CCScene *)startScene
 {
 	// This method should return the very first scene to be run when your app starts.
-	return [IntroScene scene];
+	return [SemMathScene scene];
 }
 
 @end

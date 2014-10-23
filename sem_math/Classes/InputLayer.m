@@ -8,6 +8,11 @@
 
 #import "InputLayer.h"
 
+static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
+{
+    return CGPointMake(x, [CCDirector sharedDirector].viewSize.height - y);
+}
+
 @interface InputLayer () {
     NSString * _answer;
     CCLabelTTF *answerLabel;
@@ -29,7 +34,7 @@
         self.position = ccp(0.0,0.0);
         CCNodeColor *nodeColorBlue = [CCNodeColor nodeWithColor:[CCColor blueColor]];
         [nodeColorBlue setContentSize:CGSizeMake([CCDirector sharedDirector].viewSize.width, 100.0)];
-        [self addChild:nodeColorBlue];
+        //[self addChild:nodeColorBlue];
         [self setButton:0 withPosition:ccp(100,20)];
         [self setButton:1 withPosition:ccp(140,20)];
         [self setButton:2 withPosition:ccp(180,20)];
