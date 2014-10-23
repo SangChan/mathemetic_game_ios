@@ -8,9 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+@class CarSprite;
 
 @interface GameMainLayer : CCNode {
-    
+    CarSprite *carSprite;
+    CCLabelTTF *answerLabel;
 }
+
+- (void)setAnswerLabelString:(NSString *)string;
+- (NSString *)getAnswerLabelString;
+- (void)compareInputAndAnswer;
 
 @end

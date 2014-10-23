@@ -10,7 +10,10 @@
 #import "cocos2d.h"
 
 @interface CarSprite : CCSprite {
-    
+    CCLabelTTF *expressionLabel;
+    int rightAnswer;
 }
 
+- (id)initWithPosition:(CGPoint)newPosition;
+- (BOOL)compareInput:(int)input;
 @end

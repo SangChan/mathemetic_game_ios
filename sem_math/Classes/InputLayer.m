@@ -7,6 +7,7 @@
 //
 
 #import "InputLayer.h"
+#import "GameMainLayer.h"
 
 static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 {
@@ -30,76 +31,96 @@ static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 - (id)init
 {
     if (self = [super init]) {
-        [self setAnswer:@"0"];
-        self.position = ccp(0.0,0.0);
-        CCNodeColor *nodeColorBlue = [CCNodeColor nodeWithColor:[CCColor blueColor]];
-        [nodeColorBlue setContentSize:CGSizeMake([CCDirector sharedDirector].viewSize.width, 100.0)];
-        //[self addChild:nodeColorBlue];
-        [self setButton:0 withPosition:ccp(100,20)];
-        [self setButton:1 withPosition:ccp(140,20)];
-        [self setButton:2 withPosition:ccp(180,20)];
-        [self setButton:3 withPosition:ccp(220,20)];
-        [self setButton:4 withPosition:ccp(260,20)];
-        [self setButton:5 withPosition:ccp(300,20)];
-        [self setButton:6 withPosition:ccp(340,20)];
-        [self setButton:7 withPosition:ccp(380,20)];
-        [self setButton:8 withPosition:ccp(420,20)];
-        [self setButton:9 withPosition:ccp(460,20)];
+        CCButton *homeButton = [CCButton buttonWithTitle:nil spriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_home.png"] highlightedSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_home_hit.png"] disabledSpriteFrame:nil];
+        homeButton.anchorPoint = ccp(0, 1.0);
+        homeButton.position = ccpForGame(10, 10);
+        [homeButton setTarget:self selector:@selector(homeButtonClicked:)];
+        [self addChild:homeButton];
         
-        CCButton *delButton = [CCButton buttonWithTitle:@"[del]" fontName:@"Verdana-Bold" fontSize:20.0f];
-        [delButton setPosition:ccp(140,60)];
-        [delButton setTarget:self selector:@selector(delButtonClicked:)];
-        [self addChild:delButton];
         
-        CCButton *submitButton = [CCButton buttonWithTitle:@"[submit]" fontName:@"Verdana-Bold" fontSize:20.0f];
-        [submitButton setPosition:ccp(420,60)];
-        [submitButton setTarget:self selector:@selector(submitButtonClicked:)];
-        [self addChild:submitButton];
+        CCButton *userNMButton = [CCButton buttonWithTitle:@"김재능" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_userMN.png"] highlightedSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_userMN_hit.png"] disabledSpriteFrame:nil];
+        userNMButton.label.color = [CCColor blackColor];
+        userNMButton.anchorPoint = ccp(0, 1.0);
+        userNMButton.position = ccpForGame(485, 15);
+        [self addChild:userNMButton];
         
-        answerLabel = [CCLabelTTF labelWithString:_answer fontName:@"Marker Felt" fontSize:40];
-        [answerLabel setPosition:ccp([CCDirector sharedDirector].viewSize.width / 2, 80)];
-        [self addChild:answerLabel];
+        [self makeButton];
         
     }
     return self;
 }
 
-- (void)setButton:(int)num withPosition:(CGPoint)position
+- (void)makeButton
 {
-    NSString *string = [NSString stringWithFormat:@"%d",num];
-    CCButton *numButton = [CCButton buttonWithTitle:string fontName:@"Verdana-Bold" fontSize:32.0f];
-    [numButton setPosition:position];
-    [numButton setTarget:self selector:@selector(numButtonClicked:)];
+    NSArray *buttonImage = [[NSArray alloc]initWithObjects:
+                            @"btn_1.png",@"btn_1_hit.png",
+                            @"btn_2.png",@"btn_2_hit.png",
+                            @"btn_3.png",@"btn_3_hit.png",
+                            @"btn_4.png",@"btn_4_hit.png",
+                            @"btn_5.png",@"btn_5_hit.png",
+                            @"btn_back.png",@"btn_back_hit.png",
+                            @"btn_6.png",@"btn_6_hit.png",
+                            @"btn_7.png",@"btn_7_hit.png",
+                            @"btn_8.png",@"btn_8_hit.png",
+                            @"btn_9.png",@"btn_9_hit.png",
+                            @"btn_0.png",@"btn_0_hit.png",
+                            @"btn_enter.png",@"btn_enter_hit.png", nil];
     
-    [self addChild:numButton];
+    for (int i = 0; i < 12; i++) {
+        CCButton *numPadButton = [CCButton buttonWithTitle:nil spriteFrame:[CCSpriteFrame frameWithImageNamed:[buttonImage objectAtIndex:i*2]] highlightedSpriteFrame:[CCSpriteFrame frameWithImageNamed:[buttonImage objectAtIndex:i*2+1]] disabledSpriteFrame:nil];
+        numPadButton.anchorPoint = ccp(0, 1.0);
+        numPadButton.position = ccpForGame(105 + (63 * (i%6)), (i <= 5)? 220 : 270);
+        if (i <= 5) {
+            numPadButton.name = [NSString stringWithFormat:@"%d",i+1];
+        }
+        else if (i == 10) {
+            numPadButton.name = [NSString stringWithFormat:@"%d",0];
+        }
+        else {
+            numPadButton.name = [NSString stringWithFormat:@"%d",i];
+        }
+        
+        if (i == 5) {
+            [numPadButton setTarget:self selector:@selector(backButtonClicked:)];
+        }
+        else if (i == 11) {
+            [numPadButton setTarget:self selector:@selector(enterButtonClicked:)];
+        }
+        else {
+            [numPadButton setTarget:self selector:@selector(numButtonClicked:)];
+        }
+        [self addChild:numPadButton];
+    }
 }
 
-- (void)setAnswer:(NSString *)answer
+- (void)homeButtonClicked:(id)sender
 {
-    _answer = answer;
-    [answerLabel setString:_answer];
+    NSLog(@"home button clicked!");
 }
 
-- (void)plusAnswer:(NSString *)plus
-{
-    _answer = ([_answer isEqualToString:@"0"]) ? [NSString stringWithFormat:@"%@",plus] : [NSString stringWithFormat:@"%@%@",_answer,plus];
-    [answerLabel setString:_answer];
-}
 
 - (void)numButtonClicked:(id)sender
 {
     CCButton *numButton = (CCButton *)sender;
-    [self plusAnswer:numButton.title];
+    NSLog(@"num button clicked: %@",[numButton name]);
+    
+    NSString *prevAnswer = [[GameMainLayer node] getAnswerLabelString];
+    if ([prevAnswer isEqualToString:@"0"]) {
+        [[GameMainLayer node] setAnswerLabelString:[numButton name]];
+    }
+    else {
+        [[GameMainLayer node] setAnswerLabelString:[NSString stringWithFormat:@"%@%@",prevAnswer,[numButton name]]];
+    }
 }
 
-- (void)delButtonClicked:(id)sender
+- (void)backButtonClicked:(id)sender
 {
-    [self setAnswer:@"0"];
+    [[GameMainLayer node] setAnswerLabelString:@"0"];
 }
 
-- (void)submitButtonClicked:(id)sender
+- (void)enterButtonClicked:(id)sender
 {
-    NSLog(@"submit!");
+    [[GameMainLayer node] compareInputAndAnswer];
 }
 
 @end

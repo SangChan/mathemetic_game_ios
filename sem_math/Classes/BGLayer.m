@@ -40,7 +40,7 @@ static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
         
         CCSprite * image_conTop_coinbar = [CCSprite spriteWithImageNamed:@"image_conTop_coinbar.png"];
         image_conTop_coinbar.anchorPoint = ccp(0,1.0);
-        image_conTop_coinbar.position = ccpForGame(250,10);
+        image_conTop_coinbar.position = ccpForGame(240,10);
         [self addChild:image_conTop_coinbar];
         
         
