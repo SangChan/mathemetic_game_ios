@@ -23,7 +23,20 @@
     expressionLabel.anchorPoint = ccp(0.5,-1.0);
     expressionLabel.position = ccp(self.contentSize.width/2-10,-6);
     [self addChild:expressionLabel];
-    [self setExpression:@"+" withAugend:arc4random_uniform(10) withAddend:arc4random_uniform(10)];
+    
+    image_o = [CCSprite spriteWithImageNamed:@"image_o.png"];
+    image_o.position = ccp(self.contentSize.width/2-10,10);
+    image_o.anchorPoint = ccp(0.5,0.0);
+    [self addChild:image_o];
+    [image_o setVisible:NO];
+    
+    image_x = [CCSprite spriteWithImageNamed:@"image_x.png"];
+    image_x.position = ccp(self.contentSize.width/2-10,10);
+    image_x.anchorPoint = ccp(0.5,0.0);
+    [self addChild:image_x];
+    [image_x setVisible:NO];
+    
+    [self setExpression:@"+" withAugend:arc4random_uniform(9)+1 withAddend:arc4random_uniform(9)+1];
     [self startMove];
     return self;
 }
@@ -49,6 +62,30 @@
     [self runAction:repeatingAnimation];
 }
 
+- (void)showRightAnswer
+{
+    [self stopAllActions];
+    [image_o setVisible:YES];
+    NSArray *rightAniFrames = [NSArray arrayWithObjects:[CCSpriteFrame frameWithImageNamed:@"image_car.png"], nil];
+    CCAnimation *rightAnimation = [CCAnimation animationWithSpriteFrames:rightAniFrames delay:0.5f];
+    CCActionAnimate *animationAction = [CCActionAnimate actionWithAnimation:rightAnimation];
+    CCActionRepeat *repeatingAnimation = [CCActionRepeat actionWithAction:animationAction times:2];
+    CCActionCallFunc *callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(onGetRightOrWrongAnswer)];
+    [self runAction:[CCActionSequence actions:repeatingAnimation,callFunc,nil]];
+}
+
+- (void)showWrongAnswer
+{
+    [self stopAllActions];
+    [image_x setVisible:YES];
+    NSArray *rightAniFrames = [NSArray arrayWithObjects:[CCSpriteFrame frameWithImageNamed:@"efc_wrong_01.png"],[CCSpriteFrame frameWithImageNamed:@"efc_wrong_02.png"], nil];
+    CCAnimation *rightAnimation = [CCAnimation animationWithSpriteFrames:rightAniFrames delay:0.5f];
+    CCActionAnimate *animationAction = [CCActionAnimate actionWithAnimation:rightAnimation];
+    CCActionRepeat *repeatingAnimation = [CCActionRepeat actionWithAction:animationAction times:2];
+    CCActionCallFunc *callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(onGetRightOrWrongAnswer)];
+    [self runAction:[CCActionSequence actions:repeatingAnimation,callFunc,nil]];
+}
+
 - (BOOL)compareInput:(int)input
 {
     return (input == rightAnswer);
@@ -59,12 +96,10 @@
 - (void)onCarMoveEnded
 {
     [self.parent performSelector:@selector(onCarMoveEndedWithNoAnswer)];
-    NSLog(@"onCarMoveEnded");
 }
 
 - (void)onGetRightOrWrongAnswer
 {
     [self.parent performSelector:@selector(onCarMoveEndedWithAnswer)];
-    NSLog(@"onGetRightOrWrongAnswer");
 }
 @end

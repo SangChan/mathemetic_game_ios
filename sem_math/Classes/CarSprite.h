@@ -12,8 +12,12 @@
 @interface CarSprite : CCSprite {
     CCLabelTTF *expressionLabel;
     int rightAnswer;
+    CCSprite *image_o;
+    CCSprite *image_x;
 }
 
 - (id)initWithPosition:(CGPoint)newPosition;
 - (BOOL)compareInput:(int)input;
+- (void)showRightAnswer;
+- (void)showWrongAnswer;
 @end

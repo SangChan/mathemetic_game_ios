@@ -43,6 +43,7 @@ static GameMainLayer *sharedGameMainLayer = nil;
 
 - (void)createCarSprite
 {
+    [self setAnswerLabelString:@"0"];
     carSprite = [[CarSprite alloc] initWithPosition:ccpForGame(-180,80)];
     [self addChild:carSprite];
 }
@@ -75,6 +76,12 @@ static GameMainLayer *sharedGameMainLayer = nil;
 - (void)compareInputAndAnswer
 {
     BOOL isCorrect = [carSprite compareInput:[[answerLabel string] intValue]];
+    if (isCorrect) {
+        [carSprite showRightAnswer];
+    }
+    else {
+        [carSprite showWrongAnswer];
+    }
     NSLog(@"%@",(isCorrect)?@"맞음":@"틀림");
 }
 
