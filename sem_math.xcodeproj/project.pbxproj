@@ -71,6 +71,7 @@
 		6337B1BE19F8D58E00362953 /* GameMainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6337B1BD19F8D58E00362953 /* GameMainLayer.m */; };
 		6337B1C119F9E6E100362953 /* ComboSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6337B1C019F9E6E100362953 /* ComboSprite.m */; };
 		6337B1C419F9E6F800362953 /* LevelGuageSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6337B1C319F9E6F800362953 /* LevelGuageSprite.m */; };
+		6337B1C719FA3CBC00362953 /* LevelUpSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6337B1C619FA3CBC00362953 /* LevelUpSprite.m */; };
 		6356AD2B19E25B5200EED26C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6356AD2A19E25B5200EED26C /* Default.png */; };
 		6356AD2D19E25B5200EED26C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6356AD2C19E25B5200EED26C /* Default@2x.png */; };
 		6356AD2F19E25B5200EED26C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6356AD2E19E25B5200EED26C /* Default-568h@2x.png */; };
@@ -356,6 +357,8 @@
 		6337B1C019F9E6E100362953 /* ComboSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComboSprite.m; path = Classes/ComboSprite.m; sourceTree = "<group>"; };
 		6337B1C219F9E6F800362953 /* LevelGuageSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LevelGuageSprite.h; path = Classes/LevelGuageSprite.h; sourceTree = "<group>"; };
 		6337B1C319F9E6F800362953 /* LevelGuageSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LevelGuageSprite.m; path = Classes/LevelGuageSprite.m; sourceTree = "<group>"; };
+		6337B1C519FA3CBC00362953 /* LevelUpSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LevelUpSprite.h; path = Classes/LevelUpSprite.h; sourceTree = "<group>"; };
+		6337B1C619FA3CBC00362953 /* LevelUpSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LevelUpSprite.m; path = Classes/LevelUpSprite.m; sourceTree = "<group>"; };
 		6356AD2319E25B5200EED26C /* sem_math.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sem_math.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6356AD2719E25B5200EED26C /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6356AD2A19E25B5200EED26C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
@@ -1665,6 +1668,8 @@
 				6337B1C019F9E6E100362953 /* ComboSprite.m */,
 				6337B1C219F9E6F800362953 /* LevelGuageSprite.h */,
 				6337B1C319F9E6F800362953 /* LevelGuageSprite.m */,
+				6337B1C519FA3CBC00362953 /* LevelUpSprite.h */,
+				6337B1C619FA3CBC00362953 /* LevelUpSprite.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -2032,6 +2037,7 @@
 				6356AE3A19E25B5300EED26C /* cocos2d.m in Sources */,
 				6356AE1219E25B5300EED26C /* CCSprite9Slice.m in Sources */,
 				6356AE5219E25B5300EED26C /* CCDirectorMac.m in Sources */,
+				6337B1C719FA3CBC00362953 /* LevelUpSprite.m in Sources */,
 				6356AEE819E25B5300EED26C /* CCControl.m in Sources */,
 				6356ADE219E25B5200EED26C /* CCParticleSystem.m in Sources */,
 				6356ADDE19E25B5200EED26C /* CCParticleExamples.m in Sources */,

@@ -31,7 +31,7 @@
         if (i == 0) {
             imageSrc = @"image_levelguage_below.png";
             efcImageSrc = @"image_levelguage_below_efc.png";
-        } else if (i == LEVEL_GUAGE_MAX) {
+        } else if (i == LEVEL_GUAGE_MAX - 1) {
             imageSrc = @"image_levelguage_top.png";
             efcImageSrc = @"image_levelguage_top_efc.png";
         } else {

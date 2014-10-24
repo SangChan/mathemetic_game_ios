@@ -10,6 +10,7 @@
 #import "CarSprite.h"
 #import "ComboSprite.h"
 #import "LevelGuageSprite.h"
+#import "LevelUpSprite.h"
 
 static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 {
@@ -79,10 +80,19 @@ static GameMainLayer *sharedGameMainLayer = nil;
     [self createCarSprite];
 }
 
+#define LEVEL_GUAGE_MAX 10
+#define LEVELUPSPRITE @"LEVELUPSPRITE"
 - (void)onCarMoveEndedWithAnswer
 {
     [self removeCarSprite];
-    [self createCarSprite];
+    if (levelCount == LEVEL_GUAGE_MAX) {
+        LevelUpSprite *levelupSprite = [LevelUpSprite new];
+        levelupSprite.name = LEVELUPSPRITE;
+        [self addChild:levelupSprite];
+    }
+    else {
+        [self createCarSprite];
+    }
 }
 
 - (void)showComboCard:(int)num
@@ -155,22 +165,22 @@ static GameMainLayer *sharedGameMainLayer = nil;
     [self drawComboGuage];
 }
 
-#define LEVELSPRITE @"LEVELSPRITE"
+#define LEVELGUAGESPRITE @"LEVELGUAGESPRITE"
 - (void)drawLevelGuage
 {
-    if ([self getChildByName:LEVELSPRITE recursively:NO]) {
-        [self removeChildByName:LEVELSPRITE];
+    if ([self getChildByName:LEVELGUAGESPRITE recursively:NO]) {
+        [self removeChildByName:LEVELGUAGESPRITE];
     }
     LevelGuageSprite *levelGuageSprite = [[LevelGuageSprite alloc] initWithLevelCount:levelCount];
-    [levelGuageSprite setName:LEVELSPRITE];
+    [levelGuageSprite setName:LEVELGUAGESPRITE];
     [self addChild:levelGuageSprite];
 }
 
 - (void)increaseLevelCount
 {
     levelCount++;
-    if (levelCount > 10) {
-        levelCount = 10;
+    if (levelCount > LEVEL_GUAGE_MAX) {
+        levelCount = LEVEL_GUAGE_MAX;
     }
     [self drawLevelGuage];
 }
@@ -188,5 +198,13 @@ static GameMainLayer *sharedGameMainLayer = nil;
 {
     levelCount = 0;
     [self drawLevelGuage];
+}
+
+- (void)onLevelUp
+{
+    if ([self getChildByName:LEVELUPSPRITE recursively:NO]) {
+        [self removeChildByName:LEVELUPSPRITE];
+    }
+    [self resetGame];
 }
 @end
