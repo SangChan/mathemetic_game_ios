@@ -9,6 +9,7 @@
 #import "GameMainLayer.h"
 #import "CarSprite.h"
 #import "ComboSprite.h"
+#import "LevelGuageSprite.h"
 
 static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 {
@@ -38,11 +39,22 @@ static GameMainLayer *sharedGameMainLayer = nil;
         answerLabel.position = ccpForGame(115, 190); // Middle of screen
         [self addChild:answerLabel];
         
-        comboCount = 0;
-        [self drawComboGuage];
-        [self createCarSprite];
+        [self resetGame];
     }
     return self;
+}
+
+- (void)resetGame
+{
+    image_comboCard = nil;
+    [self removeCarSprite];
+    [self setAnswerLabelString:@"0"];
+    [self resetComboCount];
+    [self drawComboGuage];
+    [self resetLevelCount];
+    [self drawLevelGuage];
+    [self createCarSprite];
+    
 }
 
 - (void)createCarSprite
@@ -54,12 +66,16 @@ static GameMainLayer *sharedGameMainLayer = nil;
 
 - (void)removeCarSprite
 {
-    [self removeChild:carSprite];
+    if (carSprite) {
+        [self removeChild:carSprite];
+    }
     carSprite = nil;
 }
 - (void)onCarMoveEndedWithNoAnswer
 {
     [self removeCarSprite];
+    [self decreaseLevelCount];
+    [self resetComboCount];
     [self createCarSprite];
 }
 
@@ -67,6 +83,26 @@ static GameMainLayer *sharedGameMainLayer = nil;
 {
     [self removeCarSprite];
     [self createCarSprite];
+}
+
+- (void)showComboCard:(int)num
+{
+    NSString *imageSrc = (num == 5) ? @"efc_5combo.png": @"efc_10combo.png";
+    image_comboCard = [CCSprite spriteWithImageNamed:imageSrc];
+    image_comboCard.position = ccp([CCDirector sharedDirector].viewSize.width/2,[CCDirector sharedDirector].viewSize.height/2);
+    image_comboCard.anchorPoint = ccp(0.5,0.5);
+    [self addChild:image_comboCard];
+    CCActionBlink *blinkAction = [CCActionBlink actionWithDuration:1 blinks:4];
+    CCActionCallFunc *funcCall = [CCActionCallFunc actionWithTarget:self selector:@selector(onComboBlinkEnd)];
+    [image_comboCard runAction:[CCActionSequence actions:blinkAction, funcCall,nil]];
+}
+
+- (void)onComboBlinkEnd
+{
+    if (image_comboCard) {
+        [self removeChild:image_comboCard];
+    }
+    image_comboCard = nil;
 }
 
 - (void)setAnswerLabelString:(NSString *)string
@@ -83,10 +119,12 @@ static GameMainLayer *sharedGameMainLayer = nil;
     if (isCorrect) {
         [carSprite showRightAnswer];
         [self increaseComboCount];
+        [self increaseLevelCount];
     }
     else {
         [carSprite showWrongAnswer];
-        [self resetComboCout];
+        [self resetComboCount];
+        [self decreaseLevelCount];
     }
 }
 
@@ -96,7 +134,7 @@ static GameMainLayer *sharedGameMainLayer = nil;
     if ([self getChildByName:COMBOSPRITE recursively:NO]) {
         [self removeChildByName:COMBOSPRITE];
     }
-    ComboSprite *comboSprite = [[ComboSprite alloc]initWithComboCount:comboCount];
+    ComboSprite *comboSprite = [[ComboSprite alloc] initWithComboCount:comboCount];
     [comboSprite setName:COMBOSPRITE];
     [self addChild:comboSprite];
 }
@@ -105,15 +143,50 @@ static GameMainLayer *sharedGameMainLayer = nil;
 {
     comboCount++;
     [self drawComboGuage];
-    if (comboCount == 5) {
-    } else if (comboCount == 10) {
+    if (comboCount % 5 == 0 && comboCount % 10 == 0) {
+        [self showComboCard:10];
+    } else if (comboCount % 5 == 0 && comboCount % 10 != 0) {
+        [self showComboCard:5];
     }
 }
-
-- (void)resetComboCout
+- (void)resetComboCount
 {
     comboCount = 0;
     [self drawComboGuage];
 }
 
+#define LEVELSPRITE @"LEVELSPRITE"
+- (void)drawLevelGuage
+{
+    if ([self getChildByName:LEVELSPRITE recursively:NO]) {
+        [self removeChildByName:LEVELSPRITE];
+    }
+    LevelGuageSprite *levelGuageSprite = [[LevelGuageSprite alloc] initWithLevelCount:levelCount];
+    [levelGuageSprite setName:LEVELSPRITE];
+    [self addChild:levelGuageSprite];
+}
+
+- (void)increaseLevelCount
+{
+    levelCount++;
+    if (levelCount > 10) {
+        levelCount = 10;
+    }
+    [self drawLevelGuage];
+}
+
+- (void)decreaseLevelCount
+{
+    levelCount--;
+    if (levelCount < 0) {
+        levelCount = 0;
+    }
+    [self drawLevelGuage];
+}
+
+- (void)resetLevelCount
+{
+    levelCount = 0;
+    [self drawLevelGuage];
+}
 @end

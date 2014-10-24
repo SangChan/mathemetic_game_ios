@@ -38,8 +38,9 @@ static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
         [self addChild:homeButton];
         
         
-        CCButton *userNMButton = [CCButton buttonWithTitle:@"김재능" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_userMN.png"] highlightedSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_userMN_hit.png"] disabledSpriteFrame:nil];
-        userNMButton.label.color = [CCColor blackColor];
+        CCButton *userNMButton = [CCButton buttonWithTitle:@"이상찬" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_userMN.png"] highlightedSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"btn_userMN_hit.png"] disabledSpriteFrame:nil];
+        [userNMButton setLabelColor:[CCColor blackColor] forState:CCControlStateNormal];
+        [userNMButton setLabelColor:[CCColor blackColor] forState:CCControlStateHighlighted];
         userNMButton.anchorPoint = ccp(0, 1.0);
         userNMButton.position = ccpForGame(485, 15);
         [self addChild:userNMButton];
@@ -96,6 +97,7 @@ static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 - (void)homeButtonClicked:(id)sender
 {
     NSLog(@"home button clicked!");
+    [[GameMainLayer node] resetGame];
 }
 
 

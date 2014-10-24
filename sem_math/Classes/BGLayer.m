@@ -55,10 +55,6 @@ static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
         image_answerboard_textbar.position = ccpForGame(105, 190);
         [self addChild:image_answerboard_textbar];
         
-        CCSprite * image_levelguage_bg = [CCSprite spriteWithImageNamed:@"image_levelguage_bg.png"];
-        image_levelguage_bg.anchorPoint = ccp(0,1.0);
-        image_levelguage_bg.position = ccpForGame(510,170);
-        [self addChild:image_levelguage_bg];
         
         CCLabelTTF *askLabel = [CCLabelTTF labelWithString:@"지나가는 문제의 답을 입력하세요." fontName:nil fontSize:13];
         askLabel.anchorPoint = ccp(0,1.0);
