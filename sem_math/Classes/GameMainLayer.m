@@ -8,6 +8,8 @@
 
 #import "GameMainLayer.h"
 #import "CarSprite.h"
+#import "ComboSprite.h"
+
 static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 {
     return CGPointMake(x, [CCDirector sharedDirector].viewSize.height - y);
@@ -30,13 +32,15 @@ static GameMainLayer *sharedGameMainLayer = nil;
 - (id)init
 {
     if (self = [super init]) {
-        [self createCarSprite];
         
         answerLabel = [CCLabelTTF labelWithString:@"0" fontName:nil fontSize:20];
         answerLabel.anchorPoint = ccp(0,1.0);
         answerLabel.position = ccpForGame(115, 190); // Middle of screen
         [self addChild:answerLabel];
         
+        comboCount = 0;
+        [self drawComboGuage];
+        [self createCarSprite];
     }
     return self;
 }
@@ -78,11 +82,38 @@ static GameMainLayer *sharedGameMainLayer = nil;
     BOOL isCorrect = [carSprite compareInput:[[answerLabel string] intValue]];
     if (isCorrect) {
         [carSprite showRightAnswer];
+        [self increaseComboCount];
     }
     else {
         [carSprite showWrongAnswer];
+        [self resetComboCout];
     }
-    NSLog(@"%@",(isCorrect)?@"맞음":@"틀림");
+}
+
+#define COMBOSPRITE @"COMBOSPRITE"
+- (void)drawComboGuage
+{
+    if ([self getChildByName:COMBOSPRITE recursively:NO]) {
+        [self removeChildByName:COMBOSPRITE];
+    }
+    ComboSprite *comboSprite = [[ComboSprite alloc]initWithComboCount:comboCount];
+    [comboSprite setName:COMBOSPRITE];
+    [self addChild:comboSprite];
+}
+
+- (void)increaseComboCount
+{
+    comboCount++;
+    [self drawComboGuage];
+    if (comboCount == 5) {
+    } else if (comboCount == 10) {
+    }
+}
+
+- (void)resetComboCout
+{
+    comboCount = 0;
+    [self drawComboGuage];
 }
 
 @end

@@ -13,6 +13,7 @@
 @interface GameMainLayer : CCNode {
     CarSprite *carSprite;
     CCLabelTTF *answerLabel;
+    int comboCount;
 }
 
 - (void)setAnswerLabelString:(NSString *)string;

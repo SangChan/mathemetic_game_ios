@@ -44,11 +44,6 @@ static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
         [self addChild:image_conTop_coinbar];
         
         
-        CCSprite * image_combo_bg = [CCSprite spriteWithImageNamed:@"image_combo_bg.png"];
-        image_combo_bg.anchorPoint = ccp(0,1.0);
-        image_combo_bg.position = ccpForGame(10,170);
-        [self addChild:image_combo_bg];
-        
         CCSprite * image_answerboard = [CCSprite spriteWithImageNamed:@"image_answerboard.png"];
         image_answerboard.anchorPoint = ccp(0,1.0);
         image_answerboard.position = ccpForGame(90,170);
