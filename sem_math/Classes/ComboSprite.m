@@ -8,6 +8,13 @@
 
 #import "ComboSprite.h"
 
+static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
+{
+    CGFloat x_offset = [CCDirector sharedDirector].viewSize.width/2 - GAME_WIDTH/2;
+    CGFloat y_offset = [CCDirector sharedDirector].viewSize.height/2 + GAME_HEIGHT/2;
+    return CGPointMake(x_offset + x, y_offset - y);
+}
+
 @implementation ComboSprite
 
 - (id)initWithComboCount:(int)comboCount
@@ -15,7 +22,7 @@
     self = [super initWithImageNamed:@"image_combo_bg.png"];
     if (!self) return nil;
     
-    self.position = ccp(10, [CCDirector sharedDirector].viewSize.height - 170);
+    self.position = ccpForGame(10, 170);
     self.anchorPoint = ccp(0,1.0);
     int combo10Count = floor(comboCount / 10);
     int combo5Count = floor((comboCount - (combo10Count * 10))/5);

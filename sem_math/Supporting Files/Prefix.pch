@@ -11,3 +11,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #endif
+
+#define GAME_WIDTH 568.0f
+#define GAME_HEIGHT 320.0f

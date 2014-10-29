@@ -12,7 +12,9 @@
 
 static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
 {
-    return CGPointMake(x, [CCDirector sharedDirector].viewSize.height - y);
+    CGFloat x_offset = [CCDirector sharedDirector].viewSize.width/2 - GAME_WIDTH/2;
+    CGFloat y_offset = [CCDirector sharedDirector].viewSize.height/2 + GAME_HEIGHT/2;
+    return CGPointMake(x_offset + x, y_offset - y);
 }
 
 + (BGLayer *)node

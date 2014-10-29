@@ -8,6 +8,12 @@
 
 #import "LevelGuageSprite.h"
 
+static inline CGPoint ccpForGame( CGFloat x, CGFloat y )
+{
+    CGFloat x_offset = [CCDirector sharedDirector].viewSize.width/2 - GAME_WIDTH/2;
+    CGFloat y_offset = [CCDirector sharedDirector].viewSize.height/2 + GAME_HEIGHT/2;
+    return CGPointMake(x_offset + x, y_offset - y);
+}
 
 @implementation LevelGuageSprite
 
@@ -16,7 +22,7 @@
     self = [super initWithImageNamed:@"image_levelguage_bg.png"];
     if (!self) return nil;
     self.anchorPoint = ccp(0,1.0);
-    self.position = ccp(510,[CCDirector sharedDirector].viewSize.height - 170);
+    self.position = ccpForGame(510,170);
     [self drawLevelItemsUsingLevelCount:levelCount];
     return self;
 }
